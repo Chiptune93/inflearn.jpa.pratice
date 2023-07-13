@@ -26,7 +26,7 @@ public class JpaSection2 {
                     .getResultList();
 
             for(Member member : result) {
-                System.out.println("Member Name is " + member.getName());
+                System.out.println("Member Name is " + member.getUsername());
             }
 
             tx.commit();

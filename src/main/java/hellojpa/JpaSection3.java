@@ -43,7 +43,7 @@ public class JpaSection3 {
             /* -------------------------------------------- */
             // 영속
             Member member4 = em.find(Member.class,200L);
-            member4.setName("ZZZZ");
+            member4.setUsername("ZZZZ");
 
             em.detach(member4); // 준영속 분리
             em.clear(); // 초기화
