@@ -3,7 +3,7 @@ package hellojpa;
 import javax.persistence.*;
 import java.util.List;
 
-public class hellojpa2 {
+public class JpaSection3 {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
@@ -39,6 +39,20 @@ public class hellojpa2 {
             // 플러시 모드 옵션
             em.setFlushMode(FlushModeType.AUTO);
             em.setFlushMode(FlushModeType.COMMIT);
+
+            /* -------------------------------------------- */
+            // 영속
+            Member member4 = em.find(Member.class,200L);
+            member4.setName("ZZZZ");
+
+            em.detach(member4); // 준영속 분리
+            em.clear(); // 초기화
+            em.close(); // 종료
+            // 준영속 상태가 되어 commit 해도 쿼리 실행할 게 없음.
+
+
+            /* -------------------------------------------- */
+
             tx.commit();
 
         } catch (Exception e) {
