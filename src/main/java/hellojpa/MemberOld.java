@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "Member")
-@Table(name = "Member", catalog = "", schema = "", uniqueConstraints = {})
-public class Member {
+//@Entity(name = "Member")
+//@Table(name = "Member", catalog = "", schema = "", uniqueConstraints = {})
+public class MemberOld {
 
     @Id
     private Long id;
@@ -35,15 +35,15 @@ public class Member {
     @Lob
     private String description;
 
-    public Member() {
+    public MemberOld() {
     }
 
-    public Member(Long id, String username) {
+    public MemberOld(Long id, String username) {
         this.id = id;
         this.username = username;
     }
 
-    public Member(Long id, String username, RoleType roleType) {
+    public MemberOld(Long id, String username, RoleType roleType) {
         this.id = id;
         this.username = username;
         this.roleType = roleType;
