@@ -30,7 +30,7 @@ public class JpaSection3 {
             em.persist(memberOld2);
             em.persist(memberOld3);
 
-            TypedQuery<MemberOld> query = em.createQuery("select m from Member m", MemberOld.class);
+            TypedQuery<MemberOld> query = em.createQuery("select m from MemberOfTeam m", MemberOld.class);
             List<MemberOld> list = query.getResultList();
             tx.commit();
 
