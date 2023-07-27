@@ -20,7 +20,7 @@ public class JpaSection2 {
 //
 //            em.persist(member);
 
-            List<MemberOld> result = em.createQuery("select m from MemberOfTeam as m", MemberOld.class)
+            List<MemberOld> result = em.createQuery("select m from Member as m", MemberOld.class)
                     .setFirstResult(1)
                     .setMaxResults(8)
                     .getResultList();

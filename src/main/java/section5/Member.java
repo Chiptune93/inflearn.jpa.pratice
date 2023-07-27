@@ -3,7 +3,7 @@ package section5;
 import javax.persistence.*;
 
 @Entity
-public class MemberOfTeam {
+public class Member {
 
     @Id
     @GeneratedValue
