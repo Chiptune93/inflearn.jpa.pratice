@@ -44,4 +44,4 @@
 ### 개선
 
 - @ManyToMany를 사용할 때는 @JoinColumn 이 아니라 @MappedBy 를 사용한다.
-- 
+- @id 와 @GeneratedValue 를 사용하는 아이디 컬럼에는 Long 이나 int 외의 값을 주면 값이 안 들어가서 변경하였다.
