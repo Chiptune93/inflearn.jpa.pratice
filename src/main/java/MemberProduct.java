@@ -1,5 +1,3 @@
-package section6.ManyToManySolved;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
