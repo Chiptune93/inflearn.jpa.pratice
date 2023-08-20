@@ -1,7 +1,3 @@
-package section6.Example;
-
-import jpaShopExample2.Item;
-import jpaShopExample2.Order;
 
 import javax.persistence.*;
 

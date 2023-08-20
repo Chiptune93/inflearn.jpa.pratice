@@ -1,9 +1,8 @@
-package section6.Example;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "categorys")
 public class Category {
 
     @Id

@@ -1,5 +1,3 @@
-package section6.Example;
-
 import javax.persistence.*;
 import java.util.List;
 

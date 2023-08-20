@@ -1,5 +1,3 @@
-package section6.Example;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
