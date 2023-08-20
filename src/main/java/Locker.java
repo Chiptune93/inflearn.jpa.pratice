@@ -1,5 +1,3 @@
-package section6.OneToOneMultiple;
-
 import javax.persistence.*;
 
 @Entity

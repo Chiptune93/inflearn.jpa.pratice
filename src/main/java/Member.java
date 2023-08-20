@@ -1,4 +1,4 @@
-package section6.OneToOneSingle;
+import section6.OneToOneSingle.Locker;
 
 import javax.persistence.*;
 
@@ -15,6 +15,7 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
+
 
 
 }
