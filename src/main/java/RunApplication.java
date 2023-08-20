@@ -1,5 +1,3 @@
-import section7.SingleTable.Movie;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -15,7 +13,7 @@ public class RunApplication {
 
         try {
 
-            // Single 타입이라 insert 쿼리 하나만 나간다.
+            // 슈퍼/서브 타입이라 쿼리가 2번 나간다.
             Movie movie = new Movie();
             movie.setDirector("aaaa");
             movie.setActor("bbbb");

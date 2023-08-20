@@ -1,5 +1,3 @@
-package section7.SingleTable;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
