@@ -1,7 +1,3 @@
-package section6.OneToManyMultiple;
-
-import section6.OneToOneSingle.Locker;
-
 import javax.persistence.*;
 
 @Entity
