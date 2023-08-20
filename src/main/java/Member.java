@@ -1,5 +1,3 @@
-package jpashop;
-
 import javax.persistence.*;
 
 @Entity

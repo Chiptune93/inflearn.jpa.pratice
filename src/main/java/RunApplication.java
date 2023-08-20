@@ -1,6 +1,3 @@
-import jpashop.Member;
-import jpashop.Order;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
