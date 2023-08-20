@@ -1,5 +1,3 @@
-import section7.SingleTable.Movie;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -15,7 +13,6 @@ public class RunApplication {
 
         try {
 
-            // Single 타입이라 insert 쿼리 하나만 나간다.
             Movie movie = new Movie();
             movie.setDirector("aaaa");
             movie.setActor("bbbb");
@@ -27,9 +24,12 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-            Movie getMovie = em.find(Movie.class, movie.getId());
-            System.out.println(getMovie);
-
+            /**
+             * 이렇게 조회할 수 있지만 단점이 존재, TablePerClass 에서는
+             * 조회하기 위해 여기에 묶여있는 테이블 전체를 Union all 해서 찾게 된다 -> 비효율적이다.
+             */
+            Item item = em.find(Item.class, movie.getId());
+            System.out.println(item);
 
             tx.commit();
         } catch (Exception e) {
