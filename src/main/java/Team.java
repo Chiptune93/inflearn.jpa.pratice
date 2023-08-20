@@ -1,5 +1,3 @@
-package section6.OneToManyMultiple;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
