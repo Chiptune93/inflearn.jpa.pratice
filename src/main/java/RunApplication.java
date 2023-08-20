@@ -1,5 +1,3 @@
-import section7.SingleTable.Movie;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -15,20 +13,16 @@ public class RunApplication {
 
         try {
 
-            // Single 타입이라 insert 쿼리 하나만 나간다.
-            Movie movie = new Movie();
-            movie.setDirector("aaaa");
-            movie.setActor("bbbb");
-            movie.setName("바람과함께사라지다");
-            movie.setPrice(10000);
-            // 아이템 테이블과 무비 테이블에 해당 데이터가 들어가게 된다.
-            em.persist(movie);
+            // 실전 예제2 -
 
-            em.flush();
-            em.clear();
+            // 케이스 1 - 즉시성으로 오더만 조회해도 오더 아이템을 알고싶다 -> 양방향 관게 설정 후, 가져오거나 설정하기
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
 
-            Movie getMovie = em.find(Movie.class, movie.getId());
-            System.out.println(getMovie);
+            // 케이스 2 - 단방향 관게로도 사실 충분하다. 할 수 있으면 최대한 단방향이 좋지만, 실무에서는 편하게 조회하기 위해 양방향 설정하는 경우가 있다.
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            em.persist(orderItem);
 
 
             tx.commit();

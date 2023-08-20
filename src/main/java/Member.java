@@ -1,6 +1,6 @@
-package jpashop;
-
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -14,6 +14,11 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
+
+    // 설계상 잘못되었다고 생각하는 구조이지만, 양방향 관게를 가져가는 실습 진행
+    @OneToMany
+    @JoinColumn(name = "member")
+    private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
         return id;
