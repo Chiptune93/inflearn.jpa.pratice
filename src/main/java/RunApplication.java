@@ -1,5 +1,3 @@
-import section7.SingleTable.Movie;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;

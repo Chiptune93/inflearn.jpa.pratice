@@ -1,5 +1,3 @@
-package section7.SingleTable;
-
 import javax.persistence.*;
 
 @Entity
