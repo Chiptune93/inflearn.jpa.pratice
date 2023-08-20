@@ -1,4 +1,5 @@
-import section7.SingleTable.Movie;
+import jpashop.Member;
+import jpashop.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,20 +16,15 @@ public class RunApplication {
 
         try {
 
-            // Single 타입이라 insert 쿼리 하나만 나간다.
-            Movie movie = new Movie();
-            movie.setDirector("aaaa");
-            movie.setActor("bbbb");
-            movie.setName("바람과함께사라지다");
-            movie.setPrice(10000);
-            // 아이템 테이블과 무비 테이블에 해당 데이터가 들어가게 된다.
-            em.persist(movie);
+            // 실전 예제1 - 데이터 중심의 설계 방식
+            Order order = em.find(Order.class, 1L);
 
-            em.flush();
-            em.clear();
+            // 데이터 관계에만 중심을 맞춘 설계는 찾을 때 이렇게 찾게 된다.
+            Long memberId = order.getMemberId();
+            Member member = em.find(Member.class, memberId);
 
-            Movie getMovie = em.find(Movie.class, movie.getId());
-            System.out.println(getMovie);
+            // 하지만 객체 지향적인 설계라면 바로 찾아갈 수 있어야 한다.
+            // Member findMember = order.getMember(member);
 
 
             tx.commit();
