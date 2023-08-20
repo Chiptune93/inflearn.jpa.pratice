@@ -12,18 +12,22 @@
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>-->
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jpashop"/>-->
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jpashop"/>-->
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/main"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/section7"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- 옵션 -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <!--데이터베이스 스키마 자동 생성 - 속성-->
+            <!--            create : SessionFactory 시작시 스키마를 삭제하고 다시 생성-->
+            <!--            create-drop : SessionFactory 종료시 스키마를 삭제-->
+            <!--            update : SessionFactory 시작시 객체 구성와 스키마를 비교하여 컬럼 추가/삭제 작업을 진행함. 기존의 스키마를 삭제하지 않고 유지.-->
+            <!--            validate : SessionFactory 시작시 객체구성과 스키마가 다르다면 예외 발생시킴.-->
             <!--<property name="hibernate.hbm2ddl.auto" value="create" /> -->
             <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
             <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
             <!--<property name="hibernate.hbm2ddl.auto" value="validate" />-->
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+<!--            <property name="hibernate.hbm2ddl.auto" value="create"/>-->
         </properties>
     </persistence-unit>
 </persistence>
