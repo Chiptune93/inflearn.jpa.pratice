@@ -55,7 +55,13 @@ public class RunApplication {
                 em.persist(book);
                 em.persist(album);
                 em.persist(movie);
+
+                Member member = new Member();
+                member.setName("member" + i);
+                member.setId(Integer.toUnsignedLong(i));
             }
+
+
 
             tx.commit();
         } catch (Exception e) {

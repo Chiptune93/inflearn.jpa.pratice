@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Categorys extends InfoHistory {
@@ -9,8 +11,14 @@ public class Categorys extends InfoHistory {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "parent_id")
     private Categorys parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Categorys> child = new ArrayList<>();
+
+    @OneToMany(mappedBy = "categorys")
+    private List<CategoryItems> itemsList = new ArrayList<>();
 
     private String name;
 
@@ -36,5 +44,21 @@ public class Categorys extends InfoHistory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Categorys> getChild() {
+        return child;
+    }
+
+    public void setChild(List<Categorys> child) {
+        this.child = child;
+    }
+
+    public List<CategoryItems> getItemsList() {
+        return itemsList;
+    }
+
+    public void setItemsList(List<CategoryItems> itemsList) {
+        this.itemsList = itemsList;
     }
 }

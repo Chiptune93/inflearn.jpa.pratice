@@ -12,7 +12,7 @@
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>-->
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jpashop"/>-->
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/jpashop"/>-->
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/section7"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb;"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- 옵션 -->
             <property name="hibernate.show_sql" value="true"/>
@@ -27,7 +27,7 @@
             <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
             <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
             <!--<property name="hibernate.hbm2ddl.auto" value="validate" />-->
-<!--            <property name="hibernate.hbm2ddl.auto" value="create"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
