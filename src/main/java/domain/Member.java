@@ -1,19 +1,24 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+package domain;
 
-@Entity
-public class Delivery extends InfoHistory {
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-    @Id
-    @GeneratedValue
-    @Column(name = "DELIVERY_ID")
+@Entity(name = "Member")
+public class Member extends InfoHistory {
+
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
+
+    private String name;
     private String city;
     private String street;
     private String zipcode;
-    private DeliveryStatus status;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_ID")
+    private List<Orders> ordersList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -21,6 +26,14 @@ public class Delivery extends InfoHistory {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCity() {
@@ -47,11 +60,11 @@ public class Delivery extends InfoHistory {
         this.zipcode = zipcode;
     }
 
-    public DeliveryStatus getStatus() {
-        return status;
+    public List<Orders> getOrdersList() {
+        return ordersList;
     }
 
-    public void setStatus(DeliveryStatus status) {
-        this.status = status;
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
     }
 }

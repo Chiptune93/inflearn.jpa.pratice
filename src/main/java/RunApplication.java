@@ -1,8 +1,10 @@
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import domain.*;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class RunApplication {
 
@@ -33,10 +35,10 @@ public class RunApplication {
             /**
              * ITEM
              */
-            for (int i = 0; i < 50; i++) {
+            for (int i = 1; i < 20; i++) {
                 Book book = new Book();
-                book.setName("Book" + i);
-                book.setAuthor("Author" + i);
+                book.setName("book" + i);
+                book.setAuthor("author" + i);
                 book.setIsbn(i);
                 book.setCreatedDateTime(LocalDateTime.now());
 
@@ -55,20 +57,95 @@ public class RunApplication {
                 em.persist(book);
                 em.persist(album);
                 em.persist(movie);
+            }
 
+            for (int i = 1; i < 10; i++) {
                 Member member = new Member();
                 member.setName("member" + i);
                 member.setId(Integer.toUnsignedLong(i));
+                member.setCity("seoul");
+                member.setStreet(i + " GIL");
+                member.setZipcode(i + " ZIP");
+                member.setCreatedDateTime(LocalDateTime.now());
+                em.persist(member);
             }
 
+            for (int i = 1; i < 10; i++) {
+                Orders order = new Orders();
+                order.setId(Integer.toUnsignedLong(i));
+                order.setOrderDate(LocalDateTime.now());
+                order.setOrderStatus(OrderStatus.WAIT);
+                order.setOrderDate(LocalDateTime.now());
+                order.setCreatedDateTime(LocalDateTime.now());
+                em.persist(order);
+            }
 
+            for (int i = 1; i < 10; i++) {
+                OrdersItems ordersItems = new OrdersItems();
+                ordersItems.setId(Integer.toUnsignedLong(i));
+                ordersItems.setOrderPrice(i * 1000);
+                ordersItems.setCount(i * 10);
+                ordersItems.setCreatedDateTime(LocalDateTime.now());
+                em.persist(ordersItems);
+            }
+
+            for (int i = 1; i < 10; i++) {
+                Delivery delivery = new Delivery();
+                delivery.setId(Integer.toUnsignedLong(i));
+                delivery.setCreatedDateTime(LocalDateTime.now());
+                delivery.setStatus(DeliveryStatus.READY);
+                em.persist(delivery);
+            }
+
+            em.flush();
+            em.clear();
+
+            for (int i = 1; i < 10; i++) {
+                Member member = em.find(Member.class, Integer.toUnsignedLong(i));
+                Orders orders = em.find(Orders.class, Integer.toUnsignedLong(i));
+                orders.setMember(member);
+                OrdersItems ordersItems = em.find(OrdersItems.class, Integer.toUnsignedLong(i));
+                Items items;
+                if (randomItems() == 1L) {
+                    items = em.createQuery("select a from Album a", Album.class).setMaxResults(1).getSingleResult();
+                } else if (randomItems() == 2L) {
+                    items = em.createQuery("select a from Book a", Book.class).setMaxResults(1).getSingleResult();
+                } else {
+                    items = em.createQuery("select a from Movie a", Movie.class).setMaxResults(1).getSingleResult();
+                }
+                System.out.println("items -> " + items);
+                ordersItems.setItem(items);
+                Delivery delivery = em.find(Delivery.class, Integer.toUnsignedLong(i));
+                delivery.setCity(member.getCity());
+                delivery.setStreet(member.getStreet());
+                delivery.setZipcode(member.getZipcode());
+                orders.setOrdersItemsList(Collections.singletonList(ordersItems));
+                orders.setDelivery(delivery);
+            }
+
+            List<Member> members = em.createQuery("select a from Member a", Member.class).getResultList();
+            System.out.println("size : " + members.size());
+            for (Member m : members) {
+                System.out.println("getName : " + m.getName());
+            }
 
             tx.commit();
+
         } catch (Exception e) {
             tx.rollback();
         } finally {
             em.close();
         }
         emf.close();
+    }
+
+    static long randomItems() {
+        Random rand = new Random();
+        return rand.nextInt((3 - 1) + 1) + 1;
+    }
+
+    static long randomItemsNumber() {
+        Random rand = new Random();
+        return rand.nextInt((19) + 1);
     }
 }

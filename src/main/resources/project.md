@@ -35,7 +35,7 @@
   - **abstart** 추상 클래스로 설정하는 것 잊지 말기!
 
 - @MappedSuperClass
-  - InfoHistory 라는 이름으로 공통으로 들어갈 등록일/수정일을 추가.
+  - domain.InfoHistory 라는 이름으로 공통으로 들어갈 등록일/수정일을 추가.
   - 이후, 상속 받는 것을 전부 추가
 
 - 관계
