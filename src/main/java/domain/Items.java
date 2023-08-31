@@ -18,6 +18,9 @@ public abstract class Items extends InfoHistory {
     private int stockQuantity;
 
     @OneToMany(mappedBy = "items")
+    private List<OrdersItems> ordersItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "items")
     private List<CategoryItems> categorysList = new ArrayList<>();
 
     public Long getId() {
@@ -58,5 +61,13 @@ public abstract class Items extends InfoHistory {
 
     public void setCategorysList(List<CategoryItems> categorysList) {
         this.categorysList = categorysList;
+    }
+
+    public List<OrdersItems> getOrdersItems() {
+        return ordersItems;
+    }
+
+    public void setOrdersItems(List<OrdersItems> ordersItems) {
+        this.ordersItems = ordersItems;
     }
 }

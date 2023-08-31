@@ -16,8 +16,7 @@ public class Member extends InfoHistory {
     private String street;
     private String zipcode;
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_ID")
+    @OneToMany(mappedBy = "member")
     private List<Orders> ordersList = new ArrayList<>();
 
     public Long getId() {

@@ -1,9 +1,6 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Delivery extends InfoHistory {
@@ -16,6 +13,9 @@ public class Delivery extends InfoHistory {
     private String street;
     private String zipcode;
     private DeliveryStatus status;
+
+    @OneToOne(mappedBy = "delivery") // 없어도 됨.
+    private Orders orders;
 
     public Long getId() {
         return id;

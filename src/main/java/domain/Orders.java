@@ -2,12 +2,14 @@ package domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Orders extends InfoHistory {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
@@ -15,13 +17,13 @@ public class Orders extends InfoHistory {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany
-    @JoinColumn(name="ORDERS_ITEMS_ID")
-    private List<OrdersItems> ordersItemsList;
-
     @OneToOne
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
+
+    @OneToMany
+    @JoinColumn(name = "order")
+    private List<OrdersItems> ordersItemsList = new ArrayList<>();
 
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
