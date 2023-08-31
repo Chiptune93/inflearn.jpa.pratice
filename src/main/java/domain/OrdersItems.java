@@ -11,11 +11,11 @@ public class OrdersItems extends InfoHistory {
     @Column(name = "ORDERS_ITEMS_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEMS_ID")
     private Items items;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Orders orders;
 

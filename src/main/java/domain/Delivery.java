@@ -16,7 +16,7 @@ public class Delivery extends InfoHistory {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    @OneToOne(mappedBy = "delivery") // 없어도 됨.
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY) // 없어도 됨.
     private Orders orders;
 
     public Long getId() {

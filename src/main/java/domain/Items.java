@@ -17,11 +17,14 @@ public abstract class Items extends InfoHistory {
     private int price;
     private int stockQuantity;
 
-    @OneToMany(mappedBy = "items")
-    private List<OrdersItems> ordersItems = new ArrayList<>();
+    @ManyToMany(mappedBy = "items")
+    private List<Categorys> categorys = new ArrayList<>();
 
-    @OneToMany(mappedBy = "items")
-    private List<CategoryItems> categorysList = new ArrayList<>();
+//    @OneToMany(mappedBy = "items")
+//    private List<OrdersItems> ordersItems = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "items")
+//    private List<CategoryItems> categorysList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -55,19 +58,19 @@ public abstract class Items extends InfoHistory {
         this.stockQuantity = stockQuantity;
     }
 
-    public List<CategoryItems> getCategorysList() {
-        return categorysList;
-    }
-
-    public void setCategorysList(List<CategoryItems> categorysList) {
-        this.categorysList = categorysList;
-    }
-
-    public List<OrdersItems> getOrdersItems() {
-        return ordersItems;
-    }
-
-    public void setOrdersItems(List<OrdersItems> ordersItems) {
-        this.ordersItems = ordersItems;
-    }
+//    public List<CategoryItems> getCategorysList() {
+//        return categorysList;
+//    }
+//
+//    public void setCategorysList(List<CategoryItems> categorysList) {
+//        this.categorysList = categorysList;
+//    }
+//
+//    public List<OrdersItems> getOrdersItems() {
+//        return ordersItems;
+//    }
+//
+//    public void setOrdersItems(List<OrdersItems> ordersItems) {
+//        this.ordersItems = ordersItems;
+//    }
 }

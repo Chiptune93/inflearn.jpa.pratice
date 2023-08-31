@@ -13,22 +13,38 @@ public class Orders extends InfoHistory {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-    @OneToMany
-    @JoinColumn(name = "ORDER_ID")
-    private List<OrdersItems> ordersItemsList = new ArrayList<>();
+//    @OneToMany
+//    @JoinColumn(name = "ORDER_ID")
+//    private List<OrdersItems> ordersItemsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    private List<OrdersItems> ordersItems = new ArrayList<>();
+
+    public List<OrdersItems> getOrdersItems() {
+        return ordersItems;
+    }
+
+    public void setOrdersItems(List<OrdersItems> ordersItems) {
+        this.ordersItems = ordersItems;
+    }
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    public void addOrderItem(OrdersItems orderItem) {
+        ordersItems.add(orderItem);
+        orderItem.setOrders(this);
+    }
 
     public Long getId() {
         return id;
@@ -46,13 +62,13 @@ public class Orders extends InfoHistory {
         this.member = member;
     }
 
-    public List<OrdersItems> getOrdersItemsList() {
-        return ordersItemsList;
-    }
-
-    public void setOrdersItemsList(List<OrdersItems> ordersItemsList) {
-        this.ordersItemsList = ordersItemsList;
-    }
+//    public List<OrdersItems> getOrdersItemsList() {
+//        return ordersItemsList;
+//    }
+//
+//    public void setOrdersItemsList(List<OrdersItems> ordersItemsList) {
+//        this.ordersItemsList = ordersItemsList;
+//    }
 
     public Delivery getDelivery() {
         return delivery;
