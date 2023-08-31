@@ -12,6 +12,8 @@ public class Delivery extends InfoHistory {
     private String city;
     private String street;
     private String zipcode;
+
+    @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
     @OneToOne(mappedBy = "delivery") // 없어도 됨.

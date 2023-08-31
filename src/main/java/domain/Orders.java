@@ -26,6 +26,8 @@ public class Orders extends InfoHistory {
     private List<OrdersItems> ordersItemsList = new ArrayList<>();
 
     private LocalDateTime orderDate;
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     public Long getId() {

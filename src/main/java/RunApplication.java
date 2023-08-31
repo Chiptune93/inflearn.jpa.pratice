@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static domain.DeliveryStatus.*;
-import static domain.OrderStatus.*;
-
 public class RunApplication {
 
     public static void main(String[] args) {
