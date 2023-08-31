@@ -15,8 +15,7 @@ public class Member {
     private String street;
     private String zipcode;
 
-    // @ManyToOne(fetch = FetchType.LAZY) // 멤버 클래스만 DB에서 조회하겠다. 지연로딩.
-    @ManyToOne(fetch = FetchType.EAGER) // 즉시 로딩 해서 사용하겠다.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
