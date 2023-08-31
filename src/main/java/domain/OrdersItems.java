@@ -3,6 +3,7 @@ package domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ORDERS_ITEMS")
 public class OrdersItems extends InfoHistory {
 
     @Id
@@ -12,10 +13,10 @@ public class OrdersItems extends InfoHistory {
 
     @ManyToOne
     @JoinColumn(name = "ITEMS_ID")
-    private Items item;
+    private Items items;
 
     @ManyToOne
-    @JoinColumn(name = "OREDR_ID")
+    @JoinColumn(name = "ORDER_ID")
     private Orders orders;
 
     private int orderPrice;
@@ -29,12 +30,12 @@ public class OrdersItems extends InfoHistory {
         this.id = id;
     }
 
-    public Items getItem() {
-        return item;
+    public Items getItems() {
+        return items;
     }
 
-    public void setItem(Items item) {
-        this.item = item;
+    public void setItems(Items items) {
+        this.items = items;
     }
 
     public Orders getOrders() {

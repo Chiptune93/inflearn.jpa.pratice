@@ -22,7 +22,7 @@ public class Orders extends InfoHistory {
     private Delivery delivery;
 
     @OneToMany
-    @JoinColumn(name = "order")
+    @JoinColumn(name = "ORDER_ID")
     private List<OrdersItems> ordersItemsList = new ArrayList<>();
 
     private LocalDateTime orderDate;

@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static domain.DeliveryStatus.*;
+import static domain.OrderStatus.*;
+
 public class RunApplication {
 
     public static void main(String[] args) {
@@ -74,7 +77,7 @@ public class RunApplication {
                 Orders order = new Orders();
                 order.setId(Integer.toUnsignedLong(i));
                 order.setOrderDate(LocalDateTime.now());
-                order.setOrderStatus(OrderStatus.WAIT);
+                order.setOrderStatus(WAIT);
                 order.setOrderDate(LocalDateTime.now());
                 order.setCreatedDateTime(LocalDateTime.now());
                 em.persist(order);
@@ -93,7 +96,7 @@ public class RunApplication {
                 Delivery delivery = new Delivery();
                 delivery.setId(Integer.toUnsignedLong(i));
                 delivery.setCreatedDateTime(LocalDateTime.now());
-                delivery.setStatus(DeliveryStatus.READY);
+                delivery.setStatus(READY);
                 em.persist(delivery);
             }
 
@@ -114,7 +117,7 @@ public class RunApplication {
                     items = em.createQuery("select a from Movie a", Movie.class).setMaxResults(1).getSingleResult();
                 }
                 System.out.println("items -> " + items);
-                ordersItems.setItem(items);
+                ordersItems.setItems(items);
                 Delivery delivery = em.find(Delivery.class, Integer.toUnsignedLong(i));
                 delivery.setCity(member.getCity());
                 delivery.setStreet(member.getStreet());
