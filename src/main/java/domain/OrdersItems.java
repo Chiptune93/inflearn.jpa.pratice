@@ -1,6 +1,8 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS_ITEMS")
@@ -43,6 +45,9 @@ public class OrdersItems extends InfoHistory {
     }
 
     public void setOrders(Orders orders) {
+        List<OrdersItems> ordersItems = new ArrayList<>();
+        ordersItems.add(this);
+        orders.setOrdersItems(ordersItems);
         this.orders = orders;
     }
 

@@ -28,6 +28,7 @@ public class Orders extends InfoHistory {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<OrdersItems> ordersItems = new ArrayList<>();
 
+
     public List<OrdersItems> getOrdersItems() {
         return ordersItems;
     }
