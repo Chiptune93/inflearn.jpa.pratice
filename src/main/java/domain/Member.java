@@ -7,17 +7,31 @@ import java.util.List;
 @Entity(name = "Member")
 public class Member extends InfoHistory {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    @Embedded
+    private Address address;
+
+//    private String city;
+//    private String street;
+//    private String zipcode;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     @OneToMany(mappedBy = "member")
     private List<Orders> ordersList = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -33,30 +47,6 @@ public class Member extends InfoHistory {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
     }
 
     public List<Orders> getOrdersList() {
