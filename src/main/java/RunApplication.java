@@ -14,11 +14,24 @@ public class RunApplication {
         try {
 
             Member member = new Member();
-            member.setName("123");
+            member.setName("member1");
             member.setAddress(new Address("1", "2", "3"));
-            member.setPeriod(new Period(LocalDateTime.now(), LocalDateTime.now()));
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("피자");
+            member.getFavoriteFoods().add("족발");
+
+            member.getAddressHistory().add(String.valueOf(new Address("1", "2", "3")));
+            member.getAddressHistory().add(String.valueOf(new Address("1", "2", "3")));
 
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            Address a = findMember.getAddress();
+            findMember.setAddress(new Address("1", "2", "3'"));
+
 
             tx.commit();
         } catch (Exception e) {
