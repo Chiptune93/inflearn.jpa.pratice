@@ -14,12 +14,29 @@ public class RunApplication {
         tx.begin();
         try {
 
+            Book book = new Book();
+            book.setAuthor("BOOK");
+            book.setName("book1");
+            book.setPrice(1000);
+            em.persist(book);
+
+            Movie movie = new Movie();
+            movie.setActor("actor");
+            movie.setName("movie1");
+            movie.setPrice(2000);
+            movie.setDirector("123");
+            em.persist(movie);
+
+            String query = "select i from Items i where type(i) IN (Book, Movie)";
+            List<Items> items = em.createQuery(query, Items.class).getResultList();
+
+            for (Items i : items) {
+                System.out.println(i.toString());
+            }
 
 
             em.flush();
             em.clear();
-
-
 
 
             tx.commit();
