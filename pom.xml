@@ -28,6 +28,21 @@
             <version>1.4.199</version>
         </dependency>
 
+        <!--        querydsl-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>4.4.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <!--        querydsl-->
+
     </dependencies>
 
 </project>

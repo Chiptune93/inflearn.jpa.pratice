@@ -1,3 +1,5 @@
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -32,17 +34,17 @@ public class RunApplication {
             // Query DSL
             //JPQL
             //select m from Member m where m.age > 18
-            JPAFactoryQuery query = new JPAQueryFactory(em);
-            QMember m = QMember.member;
-            List<Member> list =
-                    query.selectFrom(m)
-                            .where(m.age.gt(18))
-                            .orderBy(m.name.desc())
-                            .fetch();
+            JPAQueryFactory query2 = new JPAQueryFactory(em);
+            Member m2 = new Member();
+//            List<Member> list =
+//                    query2.selectFrom(m2)
+//                            .where(m2.age.gt(18))
+//                            .orderBy(m2.name.desc())
+//                            .fetch();
 
 
             // Native SQL
-            String sql ="SELECT ID, AGE, TEAM_ID, NAME FROM MEMBER WHERE NAME = ‘kim’";
+            String sql = "SELECT ID, AGE, TEAM_ID, NAME FROM MEMBER WHERE NAME = ‘kim’";
             List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
 
 
