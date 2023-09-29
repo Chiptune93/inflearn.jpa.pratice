@@ -1,6 +1,7 @@
 import jpql.Address;
 import jpql.Member;
 import jpql.MemberDTO;
+import jpql.Team;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,20 +15,36 @@ public class RunApplication {
         tx.begin();
         try {
 
-            for (int i = 0; i < 100; i++) {
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("memberA");
+            member.setAge(18);
+            member.setTeam(team);
+            em.persist(member);
 
 
             em.flush();
             em.clear();
 
-            List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
-                    .setFirstResult(1) // 처음 어디부터 가져올 것인지?
-                    .setMaxResults(10) // 몇개 까지 가져올 것인지?
+            // inner join
+            String query1 = "select m from Member m inner join m.team t";
+            // left join
+            String query2 = "select m from Member m left join m.team t";
+            // setter join
+            String query3 = "select m from Member m, Team t Where m.username = t.name";
+
+            // join on 절
+            String query4 = "select m from Member m left join m.team t on t.name = 'teamA'";
+
+            // 연관관계 조인
+            String query5 = "select m from Member m left join Team t on m.username = t.name";
+
+
+
+            List<Member> result = em.createQuery(query5, Member.class)
                     .getResultList();
 
             System.out.println("result = " + result.size());
