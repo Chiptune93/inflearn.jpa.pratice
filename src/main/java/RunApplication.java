@@ -35,6 +35,10 @@ public class RunApplication {
             // from 절 서브쿼리 -> 지원안됨.
             String query2 = "select mm.age, mm.username from (select m.age, m.username from Member m) as mm";
 
+//            하이버네이트6 변경 사항
+//            하이버네이트6 부터는 FROM 절의 서브쿼리를 지원합니다.
+//            참고 링크
+//            https://in.relation.to/2022/06/24/hibernate-orm-61- features/
 
 
             List<Member> result = em.createQuery(query2, Member.class)
