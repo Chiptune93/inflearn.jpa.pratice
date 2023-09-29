@@ -1,4 +1,5 @@
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import domain.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
