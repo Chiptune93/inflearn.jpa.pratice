@@ -1,4 +1,6 @@
+import jpql.Address;
 import jpql.Member;
+import jpql.MemberDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,27 +19,41 @@ public class RunApplication {
             member.setAge(18);
             em.persist(member);
 
-            // 리턴 타입을 받을 수 있음
-            TypedQuery<Member> memberTypedQuery = em.createQuery("select m from Member m",Member.class);
-            TypedQuery<String> memberTypedQuery2 = em.createQuery("select m.username from Member m",String.class);
-            // 리턴 타입이 명확하지 않을 때는 그냥 쿼리 객체를 이용해 결과 받음
-            Query emQuery = em.createQuery("select m.username, m.age from Member m",String.class);
+            em.flush();
+            em.clear();
 
-            // 리스트로 받기 - 여러개 또는 하나 있어야 함
-            TypedQuery<Member> memberTypedQuery3 = em.createQuery("select m from Member m",Member.class);
-            List<Member> memberList = memberTypedQuery3.getResultList();
 
-            // 싱글 객체로 받기 - 무조건 결과가 하나가 나와야 함
-            TypedQuery<Member> memberTypedQuery4 = em.createQuery("select m from Member m where m.id = 10L",Member.class);
-            Member member1 = memberTypedQuery4.getSingleResult();
-            // Spring Data Jpa -> 결과가 없어도 익셉션 안 나옴. (스프링이 트라이 캐치 한 번 해줌)
+            List<Member> memberList = em.createQuery("select m from Member m", Member.class).getResultList();
+            // 엔티티 프로젝션을 하면 결과들이 다 영속성으로 관리됨.
+            // -> 변경하면 업데이트 쿼리를 날림.
+            Member findMember = memberList.get(0);
+            findMember.setAge(20);
 
-            // 파라미터 바인딩
-//            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class);
-//            memberTypedQuery5.setParameter("username","member1");
-            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class).setParameter("username","member1");
-            Member singleResult = memberTypedQuery5.getSingleResult();
-            System.out.println("singleResult = " + singleResult.getUsername());
+            em.createQuery("select o.address from Order o", Address.class).getResultList();
+            em.createQuery("select m.username, m.age from Member m", Member.class).getResultList();
+
+            // 타입이 2개인데 어떻게 가져와야 할까?
+            // 1. Object
+            List list = em.createQuery("select m.username, m.age from Member m").getResultList();
+            Object o = list.get(0);
+            Object[] result = (Object[]) o;
+            System.out.println("username -> " + result[0]);
+            System.out.println("age -> " + result[1]);
+
+            // 2.Object[]
+            List<Object[]> list2 = em.createQuery("select m.username, m.age from Member m").getResultList();
+            Object[] result2 = list2.get(0);
+            System.out.println("username -> " + result2[0]);
+            System.out.println("age -> " + result2[1]);
+
+            // 3. new
+            List<MemberDTO> memberDTOList = em.createQuery("select new jpql.MemberDTO( m.username, m.age ) from Member m").getResultList();
+            MemberDTO memberDTO = memberDTOList.get(0);
+            System.out.println("username -> " + memberDTO.getUsername());
+            System.out.println("age -> " + memberDTO.getAge());
+
+
+
 
             tx.commit();
         } catch (Exception e) {
