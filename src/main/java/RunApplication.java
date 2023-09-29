@@ -44,60 +44,22 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-//            String query2 = "select t from Team t join fetch t.memberList m";
-//            // 경고 처리 -> 조인 페치 시, 페이징 쓰면 안됨.
-//            List<Team> memberList2 = em.createQuery(query2, Team.class)
-//                    .setFirstResult(0)
-//                    .setMaxResults(2)
-//                    .getResultList();
+            // 기본 키를 사용 조회
+            String jpql = "select m from Member m where m = :member";
+            Member findMember = em.createQuery(jpql, Member.class)
+                    .setParameter("member", member1)
+                    .getSingleResult();
 
-            String query3 = "select t from Team t";
+            System.out.println(findMember.toString());
 
-            List<Team> memberList3 = em.createQuery(query3, Team.class)
-                    .setFirstResult(0)
-                    .setMaxResults(2)
-                    .getResultList();
+            // 외래 키를 사용하여 조회
+            String query = "select m from Member m where m.team = :team";
 
-            for (Team t : memberList3) {
-                System.out.println(t.toString());
-                for(Member member : t.getMemberList()) {
-                    // DB에서 결과 조회 한 만큼 가져옴.
-                    // 레이지로딩이라 쿼리가 3번이나 나감. (연관 팀 2개 조회 -> 다 가져옴)
-                    System.out.println("member -> " + member);
-//
-//                    Hibernate:
-//                    select
-//                    memberlist0_.TEAM_ID as TEAM_ID5_0_0_,
-//                            memberlist0_.id as id1_0_0_,
-//                    memberlist0_.id as id1_0_1_,
-//                            memberlist0_.age as age2_0_1_,
-//                    memberlist0_.memberType as memberTy3_0_1_,
-//                            memberlist0_.TEAM_ID as TEAM_ID5_0_1_,
-//                    memberlist0_.username as username4_0_1_
-//                            from
-//                    Member memberlist0_
-//                    where
-//                    memberlist0_.TEAM_ID=?
-//                    member -> Member{id=3, username='회원1', age=18}
-//                    member -> Member{id=4, username='회원2', age=18}
-//                    Team{id=2, name='teamB'}
-//                    Hibernate:
-//                    select
-//                    memberlist0_.TEAM_ID as TEAM_ID5_0_0_,
-//                            memberlist0_.id as id1_0_0_,
-//                    memberlist0_.id as id1_0_1_,
-//                            memberlist0_.age as age2_0_1_,
-//                    memberlist0_.memberType as memberTy3_0_1_,
-//                            memberlist0_.TEAM_ID as TEAM_ID5_0_1_,
-//                    memberlist0_.username as username4_0_1_
-//                            from
-//                    Member memberlist0_
-//                    where
-//                    memberlist0_.TEAM_ID=?
-//                    member -> Member{id=5, username='회원3', age=18}
-                }
-            }
+            Member findMember2 = em.createQuery(query, Member.class)
+                    .setParameter("team", team2)
+                    .getSingleResult();
 
+            System.out.println(findMember2.toString());
 
 
             tx.commit();
