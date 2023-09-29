@@ -17,27 +17,21 @@ public class RunApplication {
             member.setAge(18);
             em.persist(member);
 
-            // 리턴 타입을 받을 수 있음
-            TypedQuery<Member> memberTypedQuery = em.createQuery("select m from Member m",Member.class);
-            TypedQuery<String> memberTypedQuery2 = em.createQuery("select m.username from Member m",String.class);
-            // 리턴 타입이 명확하지 않을 때는 그냥 쿼리 객체를 이용해 결과 받음
-            Query emQuery = em.createQuery("select m.username, m.age from Member m",String.class);
+            String query1 = "select 'a' || 'b' from Member m"; // concat(a,b) 가능.
+            String query2 = "select substring('asd',0,1) from Member m";
+            String query3 = "select trim(m.username) from Member m";
+            String query4 = "select upper(m.username) from Member m";
+            String query5 = "select locate('de','asdsdfg') from Member m";
+            String query6 = "select length(m.username) from Member m";
+            String query7 = "select size(t.memberList) From Team t"; // 컬렉션에 대한 크기 리턴
+            String query8 = "select index(t.memberList) From Team t"; // 값 타입 컬렉션 위치 값을 구할 때 사용
 
-            // 리스트로 받기 - 여러개 또는 하나 있어야 함
-            TypedQuery<Member> memberTypedQuery3 = em.createQuery("select m from Member m",Member.class);
-            List<Member> memberList = memberTypedQuery3.getResultList();
+            // 사용자 정의 함수 호출
+            String query9 = "select function('group_concat',m.username) From Member m";
 
-            // 싱글 객체로 받기 - 무조건 결과가 하나가 나와야 함
-            TypedQuery<Member> memberTypedQuery4 = em.createQuery("select m from Member m where m.id = 10L",Member.class);
-            Member member1 = memberTypedQuery4.getSingleResult();
-            // Spring Data Jpa -> 결과가 없어도 익셉션 안 나옴. (스프링이 트라이 캐치 한 번 해줌)
 
-            // 파라미터 바인딩
-//            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class);
-//            memberTypedQuery5.setParameter("username","member1");
-            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class).setParameter("username","member1");
-            Member singleResult = memberTypedQuery5.getSingleResult();
-            System.out.println("singleResult = " + singleResult.getUsername());
+            em.createQuery(query9);
+
 
             tx.commit();
         } catch (Exception e) {
