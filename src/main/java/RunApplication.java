@@ -29,22 +29,15 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-            // inner join
-            String query1 = "select m from Member m inner join m.team t";
-            // left join
-            String query2 = "select m from Member m left join m.team t";
-            // setter join
-            String query3 = "select m from Member m, Team t Where m.username = t.name";
+            // subquery
+            String query1 = "select (select avg(m1.age) From Member m1) as avg from Member m join Team t on m.username = t.name";
 
-            // join on 절
-            String query4 = "select m from Member m left join m.team t on t.name = 'teamA'";
-
-            // 연관관계 조인
-            String query5 = "select m from Member m left join Team t on m.username = t.name";
+            // from 절 서브쿼리 -> 지원안됨.
+            String query2 = "select mm.age, mm.username from (select m.age, m.username from Member m) as mm";
 
 
 
-            List<Member> result = em.createQuery(query5, Member.class)
+            List<Member> result = em.createQuery(query2, Member.class)
                     .getResultList();
 
             System.out.println("result = " + result.size());
