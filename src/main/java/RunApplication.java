@@ -44,22 +44,14 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-            // 기본 키를 사용 조회
-            String jpql = "select m from Member m where m = :member";
-            Member findMember = em.createQuery(jpql, Member.class)
-                    .setParameter("member", member1)
-                    .getSingleResult();
+            List<Member> member = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "회원1")
+                    .getResultList();
 
-            System.out.println(findMember.toString());
 
-            // 외래 키를 사용하여 조회
-            String query = "select m from Member m where m.team = :team";
-
-            Member findMember2 = em.createQuery(query, Member.class)
-                    .setParameter("team", team2)
-                    .getSingleResult();
-
-            System.out.println(findMember2.toString());
+            for (Member m : member) {
+                System.out.println(member.toString());
+            }
 
 
             tx.commit();
