@@ -17,6 +17,14 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Member> memberList = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public List<Member> getMemberList() {
         return memberList;
     }
