@@ -27,24 +27,22 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-            // enum type class
-            // String query = "select m.username, 'HELLO', true From Member m where m.memberType = jpql.MemberType.ADMIN";
-            String query = "select m.username, 'HELLO', true From Member m where m.memberType = :userType";
-            // List<Object[]> result = em.createQuery(query).getResultList();
-            List<Object[]> result = em.createQuery(query)
-                    .setParameter("userType", MemberType.ADMIN)
+            String query = "select " +
+                    "case when m.age <= 10 then '학생요금'" +
+                    "when m.age>=50 then '경로요금'" +
+                    "else '일반요금' " +
+                    "end " +
+                    "from Member m";
+
+            String query2 = "select colesce(m.username,'이름없는회원') as username from Member m";
+            String query3 = "select nullif(m.username,'관리자') as username from Member m";
+
+            List<String> result = em.createQuery(query3, String.class)
                     .getResultList();
 
-            for (Object[] objects : result) {
-                System.out.println("objects = " + objects[0]);
-                System.out.println("objects = " + objects[1]);
-                System.out.println("objects = " + objects[2]);
+            for (String s : result) {
+                System.out.println("s = " + s);
             }
-
-            // 아래와 같이 타입 형변환을 할 수 있음.
-            // Book이라는 객체는 아이템 상속 받은 객체라서.
-            // em.createQuery("select i from item i where type(i) = Book ", Item.class)
-
 
 
             tx.commit();
