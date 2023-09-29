@@ -1,13 +1,6 @@
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import domain.Member;
+import jpql.Member;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.*;
 import java.util.List;
 
 public class RunApplication {
@@ -19,35 +12,32 @@ public class RunApplication {
         tx.begin();
         try {
 
-            // JPQL
-            String jpql = "select m From Member m where m.name like ‘%hello%'";
-            List<Member> result = em.createQuery(jpql, Member.class)
-                    .getResultList();
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAge(18);
+            em.persist(member);
 
-            //Criteria 사용 준비
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
-            //루트 클래스 (조회를 시작할 클래스)
-            Root<Member> m = query.from(Member.class);
-            //쿼리 생성 CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), “kim”)); List<Member> resultList = em.createQuery(cq).getResultList();
+            // 리턴 타입을 받을 수 있음
+            TypedQuery<Member> memberTypedQuery = em.createQuery("select m from Member m",Member.class);
+            TypedQuery<String> memberTypedQuery2 = em.createQuery("select m.username from Member m",String.class);
+            // 리턴 타입이 명확하지 않을 때는 그냥 쿼리 객체를 이용해 결과 받음
+            Query emQuery = em.createQuery("select m.username, m.age from Member m",String.class);
 
+            // 리스트로 받기 - 여러개 또는 하나 있어야 함
+            TypedQuery<Member> memberTypedQuery3 = em.createQuery("select m from Member m",Member.class);
+            List<Member> memberList = memberTypedQuery3.getResultList();
 
-            // Query DSL
-            //JPQL
-            //select m from Member m where m.age > 18
-            JPAQueryFactory query2 = new JPAQueryFactory(em);
-            Member m2 = new Member();
-//            List<Member> list =
-//                    query2.selectFrom(m2)
-//                            .where(m2.age.gt(18))
-//                            .orderBy(m2.name.desc())
-//                            .fetch();
+            // 싱글 객체로 받기 - 무조건 결과가 하나가 나와야 함
+            TypedQuery<Member> memberTypedQuery4 = em.createQuery("select m from Member m where m.id = 10L",Member.class);
+            Member member1 = memberTypedQuery4.getSingleResult();
+            // Spring Data Jpa -> 결과가 없어도 익셉션 안 나옴. (스프링이 트라이 캐치 한 번 해줌)
 
-
-            // Native SQL
-            String sql = "SELECT ID, AGE, TEAM_ID, NAME FROM MEMBER WHERE NAME = ‘kim’";
-            List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
-
+            // 파라미터 바인딩
+//            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class);
+//            memberTypedQuery5.setParameter("username","member1");
+            TypedQuery<Member> memberTypedQuery5 = em.createQuery("select m from Member m where m.username = :username",Member.class).setParameter("username","member1");
+            Member singleResult = memberTypedQuery5.getSingleResult();
+            System.out.println("singleResult = " + singleResult.getUsername());
 
             tx.commit();
         } catch (Exception e) {
