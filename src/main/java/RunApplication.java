@@ -14,45 +14,26 @@ public class RunApplication {
         tx.begin();
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(18);
-            em.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member member = new Member();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
+
 
             em.flush();
             em.clear();
 
+            List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(1) // 처음 어디부터 가져올 것인지?
+                    .setMaxResults(10) // 몇개 까지 가져올 것인지?
+                    .getResultList();
 
-            List<Member> memberList = em.createQuery("select m from Member m", Member.class).getResultList();
-            // 엔티티 프로젝션을 하면 결과들이 다 영속성으로 관리됨.
-            // -> 변경하면 업데이트 쿼리를 날림.
-            Member findMember = memberList.get(0);
-            findMember.setAge(20);
-
-            em.createQuery("select o.address from Order o", Address.class).getResultList();
-            em.createQuery("select m.username, m.age from Member m", Member.class).getResultList();
-
-            // 타입이 2개인데 어떻게 가져와야 할까?
-            // 1. Object
-            List list = em.createQuery("select m.username, m.age from Member m").getResultList();
-            Object o = list.get(0);
-            Object[] result = (Object[]) o;
-            System.out.println("username -> " + result[0]);
-            System.out.println("age -> " + result[1]);
-
-            // 2.Object[]
-            List<Object[]> list2 = em.createQuery("select m.username, m.age from Member m").getResultList();
-            Object[] result2 = list2.get(0);
-            System.out.println("username -> " + result2[0]);
-            System.out.println("age -> " + result2[1]);
-
-            // 3. new
-            List<MemberDTO> memberDTOList = em.createQuery("select new jpql.MemberDTO( m.username, m.age ) from Member m").getResultList();
-            MemberDTO memberDTO = memberDTOList.get(0);
-            System.out.println("username -> " + memberDTO.getUsername());
-            System.out.println("age -> " + memberDTO.getAge());
-
-
+            System.out.println("result = " + result.size());
+            for (Member m : result) {
+                System.out.println("Member -> " + m.toString());
+            }
 
 
             tx.commit();
