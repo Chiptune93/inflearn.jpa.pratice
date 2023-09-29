@@ -1,6 +1,8 @@
 import jpql.*;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class RunApplication {
@@ -27,21 +29,23 @@ public class RunApplication {
             em.flush();
             em.clear();
 
-            String query = "select " +
-                    "case when m.age <= 10 then '학생요금'" +
-                    "when m.age>=50 then '경로요금'" +
-                    "else '일반요금' " +
-                    "end " +
-                    "from Member m";
+            // String query = "select m.username from Member m";
 
-            String query2 = "select colesce(m.username,'이름없는회원') as username from Member m";
-            String query3 = "select nullif(m.username,'관리자') as username from Member m";
+            // 묵시적 내부 조인 발생 -> 이게 발생하도록 짜면 안됨.
+            String query2 = "select m.team from Member m";
+            // 멤버와 연관된 팀을 가져오겠다. -> 팀도 조인해야지 데이터베이스에서 SQL로 가져올 수 있음.
 
-            List<String> result = em.createQuery(query3, String.class)
-                    .getResultList();
+            // 컬렉션 값 연관 경로 -> 묵시적 내부 조인 발생 -> 더 이상 탐색 불가.
+            // 컬렉션에서 어떤걸 가져와야할 지 모르기 때문에 ...
+            String query3 = "select t.memberList from Team t";
 
-            for (String s : result) {
-                System.out.println("s = " + s);
+            // 이런식으로 명시적 조인을 해서 가져와야 함.
+            String query4 = "select m.username from Team t join t.memberList m";
+
+            Collection result = em.createQuery(query4, Collection.class).getResultList();
+
+            for (Object o : result) {
+                System.out.println("s => " + o);
             }
 
 
